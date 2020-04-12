@@ -25,6 +25,7 @@ module LobsterPower
       @x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
       @y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
       @x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
+      exit if MiniGL::KB.key_pressed? Gosu::KbEscape
     end
 
     def draw
