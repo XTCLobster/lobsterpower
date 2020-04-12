@@ -24,7 +24,6 @@ module LobsterPower
         Pill.new(1, 50, 300),
         Pill.new(2, 500, 300),
       ]
-      @velocity = 5.0
     end
 
     # Hide mouse cursor when hovering over the game window
@@ -47,10 +46,13 @@ module LobsterPower
 
       def update_input
         MiniGL::KB.update
-        @lobster.y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
-        @lobster.x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
-        @lobster.y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
-        @lobster.x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
+
+        speed = @lobster.speed
+        @lobster.y -= speed if MiniGL::KB.key_down? Gosu::KbUp
+        @lobster.x += speed if MiniGL::KB.key_down? Gosu::KbRight
+        @lobster.y += speed if MiniGL::KB.key_down? Gosu::KbDown
+        @lobster.x -= speed if MiniGL::KB.key_down? Gosu::KbLeft
+
         exit if MiniGL::KB.key_pressed? Gosu::KbEscape
       end
 
@@ -58,8 +60,8 @@ module LobsterPower
         touched_pills_with_index = @pills.each_with_index.select { |pill, i| pill.touched_by?(@lobster) }
 
         touched_pills_with_index.reverse.each do |pill, i|
-          puts pill
           @pills.delete_at(i)
+          @lobster.increase_pill_power
         end
       end
 
