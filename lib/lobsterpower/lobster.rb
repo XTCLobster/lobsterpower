@@ -1,15 +1,9 @@
-require "forwardable"
 require "minigl"
+require "lobsterpower/entity"
 
 module LobsterPower
-  # Instead of making Lobster inherit from MiniGL::GameObject and expose all
-  # kinds of useful helpers, we make it a wrapper around a GameObject instead.
-  # That keeps the API simple for us.
   class Lobster
-    # Forward getter/setter of positions to the hidden game object
-    # to move the lobster.
-    extend Forwardable
-    def_delegators :@game_object, :x, :y, :x=, :y=
+    include Entity
 
     IMAGE_SIZE = [520, 520]
     TARGET_SIZE = [100, 100]
