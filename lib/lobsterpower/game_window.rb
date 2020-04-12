@@ -1,4 +1,5 @@
 require "minigl"
+require "lobsterpower/lobster"
 
 module LobsterPower
   class GameWindow < MiniGL::GameWindow
@@ -9,9 +10,9 @@ module LobsterPower
       MiniGL::Res.prefix = asset_path
       MiniGL::Res.img_dir = "images"
 
-      @lobster = MiniGL::Res.img :lobster
-      @x, @y = 0, 0
-      @velocity = 10.0
+      x, y = 0, 0
+      @lobster = Lobster.new(x, y)
+      @velocity = 5.0
     end
 
     # Hide mouse cursor when hovering over the game window
@@ -21,15 +22,15 @@ module LobsterPower
 
     def update
       MiniGL::KB.update
-      @y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
-      @x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
-      @y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
-      @x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
+      @lobster.y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
+      @lobster.x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
+      @lobster.y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
+      @lobster.x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
       exit if MiniGL::KB.key_pressed? Gosu::KbEscape
     end
 
     def draw
-      @lobster.draw @x, @y, 0, 0.3, 0.3
+      @lobster.draw
     end
   end
 end
