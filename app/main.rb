@@ -3,6 +3,4 @@
 
 require "lobsterpower"
 
-game_dir = File.join(File.dirname(__FILE__))
-LobsterPower.run(game_dir)
-
+LobsterPower.run

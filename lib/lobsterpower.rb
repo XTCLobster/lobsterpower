@@ -1,9 +1,13 @@
 require "lobsterpower/version"
+require "lobsterpower/game_window"
 
 module LobsterPower
+  WINDOW_SIZE = [640, 480]
+
   class << self
-    def run(game_dir)
-      raise "Expected game_dir" unless game_dir
+    def run
+      @window = LobsterPower::GameWindow.new(WINDOW_SIZE)
+      @window.show
     end
   end
 end
