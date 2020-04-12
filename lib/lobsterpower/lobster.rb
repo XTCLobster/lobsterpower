@@ -19,7 +19,7 @@ module LobsterPower
     end
 
     def draw
-      @game_object.draw nil, @scales[0], @scales[1]
+      @game_object.draw scale_x: @scales[0], scale_y: @scales[1], round: true
     end
 
     def bounds

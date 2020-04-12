@@ -34,6 +34,7 @@ module LobsterPower
 
     def update
       update_input
+      update_animations
       update_pill_intake
     end
 
@@ -55,6 +56,12 @@ module LobsterPower
         @lobster.x -= speed if MiniGL::KB.key_down? Gosu::KbLeft
 
         exit if MiniGL::KB.key_pressed? Gosu::KbEscape
+      end
+
+      def update_animations
+        @pills.each do |pill|
+          pill.update
+        end
       end
 
       def update_pill_intake
