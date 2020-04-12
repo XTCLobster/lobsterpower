@@ -12,6 +12,7 @@ module LobsterPower
       MiniGL::Res.img_dir = "images"
 
       x, y = 0, 0
+      @background = MiniGL::Res.img :background, true, true
       @lobster = Lobster.new(x, y)
       @pills = [1, 2, 3, 4, 5, 6].map { |nr| Pill.new(nr, nr * 20, nr * 20) }
       @velocity = 5.0
@@ -32,10 +33,33 @@ module LobsterPower
     end
 
     def draw
-      @lobster.draw
-      @pills.each do |pill|
-        pill.draw
-      end
+      draw_background
+      draw_pills
+      draw_lobster
     end
+
+    private
+
+      def draw_background
+        # Amound of steps to tile the background image in order to fill the window
+        x_steps = (width.to_f / @background.width.to_f).ceil.to_i
+        y_steps = (height.to_f / @background.height.to_f).ceil.to_i
+
+        (0 ... x_steps).each do |x|
+          (0 ... y_steps).each do |y|
+            @background.draw x * @background.width, y * @background.height, 0
+          end
+        end
+      end
+
+      def draw_pills
+        @pills.each do |pill|
+          pill.draw
+        end
+      end
+
+      def draw_lobster
+        @lobster.draw
+      end
   end
 end
