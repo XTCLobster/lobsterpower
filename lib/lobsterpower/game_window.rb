@@ -1,5 +1,6 @@
 require "minigl"
 require "lobsterpower/lobster"
+require "lobsterpower/pill"
 
 module LobsterPower
   class GameWindow < MiniGL::GameWindow
@@ -12,6 +13,7 @@ module LobsterPower
 
       x, y = 0, 0
       @lobster = Lobster.new(x, y)
+      @pills = [1, 2, 3, 4, 5, 6].map { |nr| Pill.new(nr, nr * 20, nr * 20) }
       @velocity = 5.0
     end
 
@@ -31,6 +33,9 @@ module LobsterPower
 
     def draw
       @lobster.draw
+      @pills.each do |pill|
+        pill.draw
+      end
     end
   end
 end
