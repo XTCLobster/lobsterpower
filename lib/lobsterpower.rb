@@ -5,8 +5,8 @@ module LobsterPower
   WINDOW_SIZE = [640, 480]
 
   class << self
-    def run
-      @window = LobsterPower::GameWindow.new(WINDOW_SIZE)
+    def run(asset_path)
+      @window = LobsterPower::GameWindow.new(WINDOW_SIZE, asset_path)
       @window.show
     end
   end

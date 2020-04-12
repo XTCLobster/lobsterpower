@@ -2,18 +2,22 @@ require "minigl"
 
 module LobsterPower
   class GameWindow < MiniGL::GameWindow
-    def initialize(window_size)
+    def initialize(window_size, asset_path)
       width, height = window_size
       super width, height, false
+
+      MiniGL::Res.prefix = asset_path
+      MiniGL::Res.img_dir = "images"
+
+      @lobster = MiniGL::Res.img :lobster
+      @x, @y = 0, 0
     end
 
     def update
-      # this method is called for every update in the game logics
-      # as events, positions, status variables,  calculations, etc.
     end
 
     def draw
-      # this method is called after updates for refreshing the game graphics
+      @lobster.draw @x, @y, 0, 0.3, 0.3
     end
   end
 end

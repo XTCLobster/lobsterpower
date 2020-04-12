@@ -3,4 +3,6 @@
 
 require "lobsterpower"
 
-LobsterPower.run
+asset_path = File.join(File.dirname(__FILE__), "..", "assets")
+
+LobsterPower.run(asset_path)
