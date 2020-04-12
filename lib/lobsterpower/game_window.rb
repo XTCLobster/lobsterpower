@@ -14,7 +14,16 @@ module LobsterPower
       x, y = 0, 0
       @background = MiniGL::Res.img :background, true, true
       @lobster = Lobster.new(x, y)
-      @pills = [1, 2, 3, 4, 5, 6].map { |nr| Pill.new(nr, nr * 20, nr * 20) }
+      @pills = [
+        Pill.new(1, 100, 100),
+        Pill.new(2, 200, 200),
+        Pill.new(3, 400, 300),
+        Pill.new(4, 200, 500),
+        Pill.new(5, 500, 200),
+        Pill.new(6, 300, 400),
+        Pill.new(1, 50, 300),
+        Pill.new(2, 500, 300),
+      ]
       @velocity = 5.0
     end
 
