@@ -18,5 +18,13 @@ module LobsterPower
     def draw
       @game_object.draw nil, @scales[0], @scales[1]
     end
+
+    def bounds
+      # Lobster body can be approximated by separating it into vertical thirds
+      offset = @game_object.bounds.w / 3
+      return MiniGL::Rectangle.new \
+        @game_object.bounds.x + offset, @game_object.bounds.y,
+        @game_object.w - 2 * offset,    @game_object.bounds.h
+    end
   end
 end
