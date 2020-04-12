@@ -11,9 +11,20 @@ module LobsterPower
 
       @lobster = MiniGL::Res.img :lobster
       @x, @y = 0, 0
+      @velocity = 10.0
+    end
+
+    # Hide mouse cursor when hovering over the game window
+    def needs_cursor?
+      false
     end
 
     def update
+      MiniGL::KB.update
+      @y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
+      @x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
+      @y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
+      @x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
     end
 
     def draw
