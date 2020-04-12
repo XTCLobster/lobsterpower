@@ -8,6 +8,10 @@ module LobsterPower
     # Forward getter/setter of positions to the hidden game object
     # to move the lobster.
     extend Forwardable
-    def_delegators :@game_object, :x, :y, :x=, :y=
+    def_delegators :@game_object, :x, :y, :x=, :y=, :bounds
+
+    def touched_by?(entity)
+      bounds.intersect? entity.bounds
+    end
   end
 end

@@ -33,12 +33,8 @@ module LobsterPower
     end
 
     def update
-      MiniGL::KB.update
-      @lobster.y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
-      @lobster.x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
-      @lobster.y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
-      @lobster.x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
-      exit if MiniGL::KB.key_pressed? Gosu::KbEscape
+      update_input
+      update_pill_intake
     end
 
     def draw
@@ -48,6 +44,24 @@ module LobsterPower
     end
 
     private
+
+      def update_input
+        MiniGL::KB.update
+        @lobster.y -= @velocity if MiniGL::KB.key_down? Gosu::KbUp
+        @lobster.x += @velocity if MiniGL::KB.key_down? Gosu::KbRight
+        @lobster.y += @velocity if MiniGL::KB.key_down? Gosu::KbDown
+        @lobster.x -= @velocity if MiniGL::KB.key_down? Gosu::KbLeft
+        exit if MiniGL::KB.key_pressed? Gosu::KbEscape
+      end
+
+      def update_pill_intake
+        touched_pills_with_index = @pills.each_with_index.select { |pill, i| pill.touched_by?(@lobster) }
+
+        touched_pills_with_index.reverse.each do |pill, i|
+          puts pill
+          @pills.delete_at(i)
+        end
+      end
 
       def draw_background
         # Amound of steps to tile the background image in order to fill the window
