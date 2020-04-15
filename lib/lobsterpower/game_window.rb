@@ -5,16 +5,21 @@ require "lobsterpower/ext/gosu/image_tiled"
 
 module LobsterPower
   class GameWindow < MiniGL::GameWindow
+    Z_SCORE = 999
+
     def initialize(window_size, asset_path)
       width, height = window_size
       super width, height, false
 
       MiniGL::Res.prefix = asset_path
       MiniGL::Res.img_dir = "images"
+      MiniGL::Res.font_dir = "fonts"
 
       x, y = 0, 0
+      @font = MiniGL::Res.font :spicyrice, 48
       @background = MiniGL::Res.img :background, true, true
       @lobster = Lobster.new(x, y)
+      @score = 0
       @pills = [
         Pill.new(1, 100, 100),
         Pill.new(2, 200, 200),
@@ -42,6 +47,7 @@ module LobsterPower
       draw_background
       draw_pills
       draw_lobster
+      draw_score
     end
 
     private
@@ -70,6 +76,7 @@ module LobsterPower
         touched_pills_with_index.reverse.each do |pill, i|
           @pills.delete_at(i)
           @lobster.increase_pill_power
+          @score = [357, (@score * 13.37).to_i].max
         end
       end
 
@@ -85,6 +92,20 @@ module LobsterPower
 
       def draw_lobster
         @lobster.draw
+      end
+
+      def draw_score
+        x, y = 9, 9
+        scale_x, scale_y = 1.0, 1.0
+        glow_color = 0xa0_2F9ED6
+        text_color = 0xff_ffffff
+        font = @font
+        text = "Score: " + @score.to_s.rjust(9, "0")
+        font.draw_text text, x-2, y-2, Z_SCORE, scale_x, scale_y, glow_color
+        font.draw_text text, x+2, y-2, Z_SCORE, scale_x, scale_y, glow_color
+        font.draw_text text, x-2, y+2, Z_SCORE, scale_x, scale_y, glow_color
+        font.draw_text text, x+2, y+2, Z_SCORE, scale_x, scale_y, glow_color
+        font.draw_text text, x,   y,   Z_SCORE, scale_x, scale_y, text_color
       end
   end
 end
